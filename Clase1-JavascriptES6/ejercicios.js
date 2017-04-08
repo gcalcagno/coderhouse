@@ -218,10 +218,12 @@ console.log(cambaiarTitulo);
 /*---> agrupar los post por usuarios */
 
 var agruparPosts = posts.reduce (function(acc, val){
-	//return acc;
+	//si el acumulador esta vacío
 	if(!acc[val.userId]){
+    //creo un array y asigno el primer post al array
 		acc[val.userId] = [val];
 	}else{
+    //asigna el post al usuario 
 		acc[val.userId].push(val);
 	}
 	
@@ -264,4 +266,86 @@ class UserClass {
 let newUserClass = new UserClass (objUser);
 newUserClass.getpost();
 
+/**************************************************************************/
+
+
+
+
+
+
+/*************************** EJERCICIO 7 *********************************/
+/*---> Promesas */
+
+function request(url) {
+
+    return p1 = new Promise( function(resolver, rechazar) { 
+
+    /*let req = new XMLHttpRequest();
+      req.onreadystatechange = () => {
+        if(req.readyState == 4){
+          if(req.status === 200){
+            cb(req.response, null);//resuelve
+          }
+          else{
+            cb(null, new Error(req.statusText));//error
+          }
+        }
+      };
+      req.onerror = () => cb(new Error(req.statusText));//error
+      */
+    fetch(url);
+     // req.open('GET', url);
+     // req.send();
+      
+  } );
+
+
+  p1
+    .then(
+      function(response){
+        response.json();
+      }
+    )
+    .then((resolver) => console.log(resolver))
+    .catch(console.log('errorMessage'));
+ 
+}
+
+request('https://jsonplaceholder.typicode.com/posts');
+
+
+
+/*fetch('https://jsonplaceholder.typicode.com/posts')
+.then((response) => response.json())
+.then((result) => console.log(result))
+.catch(console.log('errorMessage'));*/
+
+/*let MyPromise = new Promise( function(resolver, rechazar) { 
+
+
+} );
+
+Mypromise
+  .then(function(){})
+  .catch(function(){})
+
+
+
+function request(url, cb) {
+  let req = new XMLHttpRequest();
+  req.onreadystatechange = () => {
+    if(req.readyState == 4){
+      if(req.status === 200){
+        cb(req.response, null);
+      }
+      else{
+        cb(null, new Error(req.statusText));
+      }
+    }
+  };
+  req.onerror = () => cb(new Error(req.statusText));
+  req.open('GET', url);
+  req.send();
+}
+*/
 /**************************************************************************/

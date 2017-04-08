@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Redux ejemplo suma</title>
+    <script src="https://unpkg.com/redux@latest/dist/redux.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  </head>
+  <body>
+
+    <div>
+      <!-- calculadora -->
+      <div class="container text-center">
+        <h1>CALCULADORA</h1>
+        <div class="col-xs-12 form-group">
+            <input id="valor1" type="number" value="0">
+            <input id="valor2" type="number" value="0">
+            <button id="sumar">+</button>
+            <button id="restar">-</button>
+            <input id="resultado" type="text" value="0">
+        </div>
+      </div>
+      <!-- calculadora -->
+    </div>
+
+
+    <script>
+
+      // CREA STORE
+      var store = Redux.createStore(calcular)
+
+
+      //LLAMA CALLBACKS (en este caso solo a render)
+      store.subscribe(render)
+
+
+      //STORE DISPATCH
+      function calcular(state, action) {
+        if (typeof state === 'undefined') {
+          return 0
+        }
+        switch (action.type) {
+          case 'SUMAR':
+            var valor2 = parseInt(document.getElementById('valor2').value);
+            var valor1 = parseInt(document.getElementById('valor1').value);
+            return valor1 + valor2;
+          case 'RESTAR':
+            var valor2 = parseInt(document.getElementById('valor2').value);
+            var valor1 = parseInt(document.getElementById('valor1').value);
+            return valor1 - valor2;
+          default:
+            return state
+        }
+      }
+
+
+      //CALLBACKS
+      var resultado = document.getElementById('resultado');
+      function render() {
+        resultado.value = store.getState()
+      }
+      render()
+
+  
+      //ELEMENTOS llaman a store.dispatch
+      document.getElementById('sumar')
+        .addEventListener('click', function () {
+          store.dispatch({ type: 'SUMAR' })
+      })
+
+      document.getElementById('restar')
+        .addEventListener('click', function () {
+          store.dispatch({ type: 'RESTAR' })
+      })
+
+
+
+    </script>
+
+  </body>
+</html>
